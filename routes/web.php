@@ -1,12 +1,15 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\PolicyController;
+use App\Http\Middleware\TokenAuthenticate;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\UserController;
-use App\Models\User;
+use App\Http\Controllers\CustomerController;
+use Doctrine\Common\Lexer\Token;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,3 +42,11 @@ Route::get('/PolicyByType/{type}', [PolicyController::class, 'PolicyByType']);
 Route::get('/UserLogin/{UserEmail}', [UserController::class, 'UserLogin']);
 Route::get('/VerifyLogin/{UserEmail}/{otp}', [UserController::class, 'VerifyLogin']);
 Route::get('/Logout', [UserController::class, 'Logout']);
+
+
+// tokenauthenticate middleware group
+Route::middleware(TokenAuthenticate::class)->group(function () {
+    // Customer Profile
+    Route::post('/CreateProfile', [CustomerController::class, 'CreateProfile']);
+    Route::get('/ReadProfile', [CustomerController::class, 'ReadProfile']);
+});

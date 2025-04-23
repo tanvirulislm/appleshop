@@ -44,9 +44,11 @@ Route::get('/VerifyLogin/{UserEmail}/{otp}', [UserController::class, 'VerifyLogi
 Route::get('/Logout', [UserController::class, 'Logout']);
 
 
-// tokenauthenticate middleware group
+// Tokenauthenticate middleware group
 Route::middleware(TokenAuthenticate::class)->group(function () {
     // Customer Profile
     Route::post('/CreateProfile', [CustomerController::class, 'CreateProfile']);
     Route::get('/ReadProfile', [CustomerController::class, 'ReadProfile']);
+
+    Route::post('/CreateProductReview', [ProductController::class, 'CreateProductReview']);
 });

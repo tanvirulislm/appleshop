@@ -50,5 +50,12 @@ Route::middleware(TokenAuthenticate::class)->group(function () {
     Route::post('/CreateProfile', [CustomerController::class, 'CreateProfile']);
     Route::get('/ReadProfile', [CustomerController::class, 'ReadProfile']);
 
+    // Review
     Route::post('/CreateProductReview', [ProductController::class, 'CreateProductReview']);
+
+
+    // WhishList
+    Route::get('/ProductWishList', [ProductController::class, 'ProductWishList']);
+    Route::get('/CreateWishList/{product_id}', [ProductController::class, 'CreateWishList']);
+    Route::get('/RemoveWishList/{product_id}', [ProductController::class, 'RemoveWishList']);
 });

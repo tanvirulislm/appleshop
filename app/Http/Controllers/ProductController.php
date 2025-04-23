@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Customer;
+use App\Models\ProductWish;
 use Illuminate\Http\Request;
 use App\Models\ProductDetail;
 use App\Models\ProductReview;
@@ -66,5 +67,39 @@ class ProductController extends Controller
         } else {
             return ResponseHelper::Out('fail', 'Customer profile not exist', 200);
         }
+    }
+
+
+    public function ProductWishList(Request $request)
+    {
+        $user_id = $request->header('id');
+
+        // dd($user_id);
+
+        $data = ProductWish::where('user_id', $user_id)->with('product')->get();
+        return ResponseHelper::Out('success', $data, 200);
+    }
+
+
+    public function CreateWishList(Request $request)
+    {
+        $user_id = $request->header('id');
+
+        $data = ProductWish::updateOrCreate(
+            ['user_id' => $user_id, 'product_id' => $request->product_id],
+            ['user_id' => $user_id, 'product_id' => $request->product_id],
+        );
+        return ResponseHelper::Out('success', $data, 200);
+    }
+
+    public function RemoveWishList(Request $request)
+    {
+        $user_id = $request->header('id');
+
+        $data = ProductWish::where([
+            ['user_id', '=', $user_id],
+            ['product_id', '=', $request->product_id]
+        ])->delete();
+        return ResponseHelper::Out('success', $data, 200);
     }
 }

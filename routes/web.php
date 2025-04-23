@@ -58,4 +58,10 @@ Route::middleware(TokenAuthenticate::class)->group(function () {
     Route::get('/ProductWishList', [ProductController::class, 'ProductWishList']);
     Route::get('/CreateWishList/{product_id}', [ProductController::class, 'CreateWishList']);
     Route::get('/RemoveWishList/{product_id}', [ProductController::class, 'RemoveWishList']);
+
+
+    // Product Cart
+    Route::post('/CreateCartList', [ProductController::class, 'CreateCartList']);
+    Route::get('/CartList', [ProductController::class, 'CartList']);
+    Route::get('/DeleteCartList/{product_id}', [ProductController::class, 'DeleteCartList']);
 });

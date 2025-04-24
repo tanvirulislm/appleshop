@@ -8,12 +8,13 @@ class Invoice extends Model
 {
     protected $fillable = [
         'total',
+        'discount',
         'vat',
         'payable',
         'cus_details',
         'ship_details',
+        'shipping_method',
         'tran_id',
-        'val_id',
         'delivery_status',
         'payment_status',
         'user_id'

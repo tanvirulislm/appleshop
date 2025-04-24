@@ -9,6 +9,7 @@ use App\Http\Middleware\TokenAuthenticate;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\InvoiceController;
 use Doctrine\Common\Lexer\Token;
 
 Route::get('/', function () {
@@ -44,7 +45,7 @@ Route::get('/VerifyLogin/{UserEmail}/{otp}', [UserController::class, 'VerifyLogi
 Route::get('/Logout', [UserController::class, 'Logout']);
 
 
-// Tokenauthenticate middleware group
+// Token authenticate middleware group
 Route::middleware(TokenAuthenticate::class)->group(function () {
     // Customer Profile
     Route::post('/CreateProfile', [CustomerController::class, 'CreateProfile']);
@@ -64,4 +65,15 @@ Route::middleware(TokenAuthenticate::class)->group(function () {
     Route::post('/CreateCartList', [ProductController::class, 'CreateCartList']);
     Route::get('/CartList', [ProductController::class, 'CartList']);
     Route::get('/DeleteCartList/{product_id}', [ProductController::class, 'DeleteCartList']);
+
+    // Invoice
+    Route::get('/InvoiceCreate', [InvoiceController::class, 'InvoiceCreate']);
+    Route::get('/InvoiceList', [InvoiceController::class, 'InvoiceList']);
+    Route::get('/InvoiceProductList/{invoice_id}', [InvoiceController::class, 'InvoiceProductList']);
 });
+
+// Payment Status
+Route::post('/PaymentSuccess', [InvoiceController::class, 'PaymentSuccess']);
+Route::post('/PaymentCancel', [InvoiceController::class, 'PaymentCancel']);
+Route::post('/PaymentFail', [InvoiceController::class, 'PaymentFail']);
+Route::post('/PaymentIPN', [InvoiceController::class, 'PaymentIPN']);
